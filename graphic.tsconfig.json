@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outFile": "js/graphic.js",
+        "rootDir": "ts/graphic/"
+    },
+    "include":["**/graphic/*.ts"]
+}

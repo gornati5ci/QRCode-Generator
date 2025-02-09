@@ -1,0 +1,1 @@
+enum ErrorCorrection {L,M,Q,H};

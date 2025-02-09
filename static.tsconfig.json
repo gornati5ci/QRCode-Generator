@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outFile": "js/static.js",
+        "rootDir": "ts/static/"
+    },
+    "include":["**/static/*.ts"]
+}

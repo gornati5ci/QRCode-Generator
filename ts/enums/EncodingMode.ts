@@ -1,0 +1,1 @@
+enum EncodingMode {NUMERIC, ALFANUMERIC, BYTE, KANJI};

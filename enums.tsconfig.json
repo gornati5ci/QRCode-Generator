@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outFile": "js/enums.js",
+        "rootDir": "ts/enums/"
+    },
+    "include":["**/enums/*.ts"]
+}

@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outFile": "js/script.js",
+        "rootDir": "ts"
+    },
+    "include":["**/script.ts"]
+}
