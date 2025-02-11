@@ -1,3 +1,3 @@
-function GetDataLength(version:number, errorCorrection:ErrorCorrection):DataLength {
-    return DATA_LENGTH.filter(data=>data.version==version&&data.errorCorrection==errorCorrection)[0];
+function GetDataLength(informations:GeneralInformation):DataLength {
+    return DATA_LENGTH.filter(data=>data.version==informations.version&&data.errorCorrection==informations.errorCorrection)[0];
 }

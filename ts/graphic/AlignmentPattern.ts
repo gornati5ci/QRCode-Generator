@@ -1,4 +1,4 @@
-class AlignmentPattern {
+class AlignmentPattern implements IBlock {
     row: number;
     col: number;
 
@@ -7,33 +7,32 @@ class AlignmentPattern {
         this.col = col;
     }
 
+    GetCoordinates():number[][] {
+        const result:number[][]=[];
+        for(let i=0; i<5; i++) {
+            for(let j=0; j<5; j++) {
+                result.push([this.row+i, this.col+j]);
+            }
+        }
+        return result;
+    }
+
+    SetCell(cell:Cell, indice:number):void {
+        if(cell.scope!=CellScope.Empty) return;
+        if(cell.row==this.row||cell.row==this.row+4||cell.col==this.col||cell.col==this.col+4) {
+            cell.Set(CellScope.AlignmentPattern,true);
+        } else if(cell.row==this.row+2&&cell.col==this.col+2) {
+            cell.Set(CellScope.AlignmentPattern,true);
+        } else {
+            cell.Set(CellScope.AlignmentPattern,false);
+        }
+    }
+
     overlap(numberOfPixels: number): boolean {
         if (this.row <= 7 && this.col <= 7) return true;
         if (this.row >= numberOfPixels - 8 - 7 && this.col <= 7) return true;
         if (this.row <= 7 && this.col >= numberOfPixels - 8 - 7) return true;
 
         return false;
-    }
-
-    draw(real:boolean) {
-        for (let i = 0; i < 5; i++) {
-            Color(this.row, this.col+i, real?"black":"green");
-            Color(this.row+4, this.col+i, real?"black":"green");
-        }
-        for (let i = 0; i < 5; i++) {
-            Color(this.row+i, this.col, real?"black":"green");
-            Color(this.row+i, this.col+4, real?"black":"green");
-        }
-        Color(this.row+2,this.col+2,real?"black":"green");
-
-        for (let i = 0; i < 5; i++) {
-            for (let j = 0; j < 5; j++) {
-                const elemento = document.querySelector("td[data-row=\"" + (this.row + i) + "\"][data-col=\"" + (this.col + j) + "\"]");
-                if (!elemento.classList.contains("black")) {
-                    Color(this.row+i, this.col+j, real?"white":"green");
-                }
-
-            }
-        }
     }
 }

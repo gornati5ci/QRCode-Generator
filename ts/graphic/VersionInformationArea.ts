@@ -1,4 +1,4 @@
-class VersionInformationArea {
+class VersionInformationArea implements IBlock {
     row: number;
     col: number;
     vertical: boolean;
@@ -9,14 +9,21 @@ class VersionInformationArea {
         this.vertical = vertical;
     }
 
-    draw(real) {
+    GetCoordinates(): number[][] {
+        const result:number[][]=[];
         let deltaX = this.vertical ? 3 : 6;
         let deltaY = this.vertical ? 6 : 3;
         for (let x = 0; x < deltaX; x++) {
             for (let y = 0; y < deltaY; y++) {
-                if (!document.querySelector("td[data-row=\"" + (this.row + y) + "\"][data-col=\"" + (this.col + x) + "\"]").classList.contains("black"))
-                    Color(this.row+y, this.col+x, real?"blue":"green");
+                result.push([this.row+y, this.col+x]);
             }
+        }
+        return result;
+    }
+
+    SetCell(cell: Cell, indice: number): void {
+        if(cell.scope==CellScope.Empty) {
+            cell.scope=CellScope.VersionInformationArea;
         }
     }
 }

@@ -1,4 +1,4 @@
-class Separator {
+class Separator implements IBlock {
     row: number;
     col: number;
     vertical: boolean;
@@ -9,15 +9,18 @@ class Separator {
         this.vertical = vertical;
     }
 
-    draw(real:boolean) {
-        if (this.vertical) {
-            for (let i = 0; i < 8; i++) {
-                Color(this.row, this.col+i, real?"white":"green");
-            }
-        } else {
-            for (let i = 0; i < 8; i++) {
-                Color(this.row+i, this.col, real?"white":"green");
-            }
+    GetCoordinates():number[][] {
+        const result:number[][]=[];
+        for(let i=0; i<8; i++) {
+            const row = this.row+(this.vertical?0:i);
+            const col = this.col+(this.vertical?i:0);
+            result.push([row,col]);
         }
+        return result;
+    }
+
+    SetCell(cell:Cell, indice:number):void {
+        if(cell.scope!=CellScope.Empty) return;
+        cell.scope=CellScope.Separator;
     }
 }

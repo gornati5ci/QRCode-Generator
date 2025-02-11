@@ -1,4 +1,4 @@
-class FindingPattern {
+class FindingPattern implements IBlock {
     row: number;
     col: number;
 
@@ -7,34 +7,24 @@ class FindingPattern {
         this.col = col;
     }
 
-    draw(real) {
-        for (let i = 0; i < 7; i++) {
-            Color(this.row, this.col+i, real?"black":"green");
-            Color(this.row+6, this.col+i, real?"black":"green");
-        }
-        for (let i = 0; i < 7; i++) {
-            Color(this.row+i, this.col, real?"black":"green");
-            Color(this.row+i, this.col+6, real?"black":"green");
-        }
-        Color(this.row + 2, this.col + 2,real?"black":"green");
-        Color(this.row + 3, this.col + 2,real?"black":"green");
-        Color(this.row + 4, this.col + 2,real?"black":"green");
-        Color(this.row + 2, this.col + 3,real?"black":"green");
-        Color(this.row + 3, this.col + 3,real?"black":"green");
-        Color(this.row + 4, this.col + 3,real?"black":"green");
-        Color(this.row + 2, this.col + 4,real?"black":"green");
-        Color(this.row + 3, this.col + 4,real?"black":"green");
-        Color(this.row + 4, this.col + 4,real?"black":"green");
 
-        for (let i = 0; i < 7; i++) {
-            for (let j = 0; j < 7; j++) {
-                const elemento = document.querySelector("td[data-row=\"" + (this.row + i) + "\"][data-col=\"" + (this.col + j) + "\"]");
-                if (!elemento.classList.contains("black")) {
-                    Color(this.row+i, this.col+j, real?"white":"green");
-                }
-
+    GetCoordinates():number[][] {
+        const result:number[][]=[];
+        for(let i=0; i<7; i++) {
+            for(let j=0; j<7; j++) {
+                result.push([this.row+i, this.col+j]);
             }
         }
+        return result;
     }
 
+    SetCell(cell:Cell, indice:number):void {
+        if(cell.scope!=CellScope.Empty) return;
+        if(cell.row==this.row||cell.row==this.row+6) cell.Set(CellScope.FindingPattern,true);
+        else if(cell.col==this.col||cell.col==this.col+6) cell.Set(CellScope.FindingPattern,true);
+        else if(cell.row==this.row+2&&(cell.col==this.col+2||cell.col==this.col+3||cell.col==this.col+4)) cell.Set(CellScope.FindingPattern,true);
+        else if(cell.row==this.row+3&&(cell.col==this.col+2||cell.col==this.col+3||cell.col==this.col+4)) cell.Set(CellScope.FindingPattern,true);
+        else if(cell.row==this.row+4&&(cell.col==this.col+2||cell.col==this.col+3||cell.col==this.col+4)) cell.Set(CellScope.FindingPattern,true);
+        else cell.Set(CellScope.FindingPattern,false);        
+    }
 }

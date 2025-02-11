@@ -6,12 +6,14 @@ class Coordinates {
     left: boolean;
     up: boolean;
     firstCol:boolean;
+    table:Table;
 
-    constructor(maxRow: number, maxCol: number) {
-        this.maxRow = maxRow;
-        this.maxCol = maxCol;
-        this.row = maxRow;
-        this.col = maxCol;
+    constructor(table:Table) {
+        this.table=table;
+        this.maxRow = this.table.dimension-1;
+        this.maxCol = this.table.dimension-1;
+        this.row = this.maxRow;
+        this.col = this.maxCol;
         this.left = true;
         this.up = true;
         this.firstCol = false;
@@ -19,10 +21,7 @@ class Coordinates {
 
     move() {
         if(this.firstCol){
-            if (!document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("black")
-                && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("white")
-                && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("blue")
-            ) return;
+            if(this.table.cells[this.row][this.col].scope==CellScope.Empty||this.table.cells[this.row][this.col].scope==CellScope.Data) return;
             this.row--;
             return this.move();
         }
@@ -31,10 +30,7 @@ class Coordinates {
                 this.col--;
                 if (this.col < 0) throw "Invalid col";
                 this.left = false;
-                if (!document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("black")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("white")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("blue")
-                ) return;
+                if(this.table.cells[this.row][this.col].scope==CellScope.Empty||this.table.cells[this.row][this.col].scope==CellScope.Data) return;
                 return this.move();
             } else {
                 this.left = true;
@@ -47,10 +43,7 @@ class Coordinates {
                     this.up = false;
                     this.left = true;
                 }
-                if (!document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("black")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("white")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("blue")
-                ) return;
+                if(this.table.cells[this.row][this.col].scope==CellScope.Empty||this.table.cells[this.row][this.col].scope==CellScope.Data) return;
                 return this.move();
             }
         } else {
@@ -58,10 +51,7 @@ class Coordinates {
                 this.left = false;
                 this.col--;
                 if (this.col < 0) throw "Invalid position";
-                if (!document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("black")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("white")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("blue")
-                ) return;
+                if(this.table.cells[this.row][this.col].scope==CellScope.Empty||this.table.cells[this.row][this.col].scope==CellScope.Data) return;
                 return this.move();
             } else {
                 this.left = true;
@@ -77,10 +67,7 @@ class Coordinates {
                     this.left = true;
                     this.up = true;
                 }
-                if (!document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("black")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("white")
-                    && !document.querySelector(`td[data-row="${this.row}"][data-col="${this.col}"]`).classList.contains("blue")
-                ) return;
+                if(this.table.cells[this.row][this.col].scope==CellScope.Empty||this.table.cells[this.row][this.col].scope==CellScope.Data) return;
                 return this.move();
             }
         }

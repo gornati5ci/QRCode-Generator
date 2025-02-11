@@ -1,4 +1,4 @@
-class FormatInformation {
+class FormatInformation implements IBlock {
     row: number;
     col: number;
     length: number;
@@ -11,21 +11,19 @@ class FormatInformation {
         this.vertical = vertical;
     }
 
-    draw(real:boolean) {
-        if (this.vertical) {
-            let currentRow = this.row;
-            for (let i = 0; i < this.length; i++) {
-                if (!document.querySelector("td[data-row=\"" + currentRow + "\"][data-col=\"" + this.col + "\"]").classList.contains("black"))
-                    Color(currentRow , this.col, real?"blue":"green");
-                currentRow++;
-            }
-        } else {
-            let currentCol = this.col;
-            for (let i = 0; i < this.length; i++) {
-                if (!document.querySelector("td[data-row=\"" + this.row + "\"][data-col=\"" + currentCol + "\"]").classList.contains("black"))
-                    Color(this.row, currentCol, real?"blue":"green");
-                currentCol++;
-            }
+    GetCoordinates():number[][] {
+        const result:number[][]=[];
+        for (let i = 0; i < this.length; i++) {
+            const deltaRow = this.vertical?i:0;
+            const deltaCol = this.vertical?0:i;
+            result.push([this.row+deltaRow,this.col+deltaCol]);
+        }
+        return result;
+    }
+
+    SetCell(cell:Cell, indice:number):void {
+        if(cell.scope==CellScope.Empty) {
+            cell.scope=CellScope.FormatInformation;
         }
     }
 }
